@@ -1,0 +1,7 @@
+{
+  "name": "KybelTest",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
