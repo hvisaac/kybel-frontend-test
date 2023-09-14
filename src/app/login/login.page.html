@@ -1,0 +1,15 @@
+<ion-content [fullscreen]="true">
+  <ion-item>
+    <ion-icon slot="start" name="person"></ion-icon>
+    <ion-input placeholder="usuario" #username></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-icon slot="start" name="key"></ion-icon>
+    <ion-input placeholder="contraseña" type="password" #password></ion-input>
+  </ion-item>
+  <ion-fab vertical="bottom" horizontal="center">
+    <ion-fab-button (click)="signIn(username.value, password.value)">
+      <ion-icon name="log-in"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

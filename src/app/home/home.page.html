@@ -1,20 +1,108 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
+  <ion-item>
+    <ion-item slot="start">
+      <ion-select interface="popover" [value]="1" #searchType>
+        <ion-select-option [value]="1">RFC</ion-select-option>
+        <ion-select-option [value]="2">Razón Social</ion-select-option>
+        <ion-select-option [value]="3">Estado</ion-select-option>
+        <ion-select-option [value]="4">ciudad</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-toolbar>
+      <ion-searchbar [debounce]="1000" (ionInput)="handleInput($event, searchType.value)" [animated]="true"></ion-searchbar>
+    </ion-toolbar>
+  </ion-item>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="2">
+        <ion-item>
+          <ion-label>RFC</ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col size="2">
+        <ion-item>
+          <ion-label>Razón social</ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col size="2">
+        <ion-item>
+          <ion-label>Estado</ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col size="2">
+        <ion-item>
+          <ion-label>Ciudad</ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col size="2">
+        <ion-item>
+          <ion-label>Tipo de empresa</ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col size="1"></ion-col>
+    </ion-row>
+    <ion-row *ngFor="let enterprise of results" class="ion-justify-content-center">
+      <ion-col size="2">
+        <ion-item>
+          <ion-label>
+            {{enterprise.rfc}}
+          </ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col size="2">
+        <ion-item>
+          <ion-label>
+            {{enterprise.razon_social}}
+          </ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col size="2">
+        <ion-item>
+          <ion-label>
+            {{enterprise.city.estado.name}}
+          </ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col size="2">
+        <ion-item>
+          <ion-label>
+            {{enterprise.city.name}}
+          </ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col size="2" *ngIf="enterprise.persona_fisica">
+        <ion-item>
+          <ion-label>
+            Persona física
+          </ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col size="2" *ngIf="enterprise.persona_moral">
+        <ion-item>
+          <ion-label>
+            Persona moral
+          </ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col size="1">
+        <ion-buttons>
+          <ion-button (click)="createPdf(enterprise)"><ion-icon slot="icon-only"
+              name="document"></ion-icon></ion-button>
+          <ion-button (click)="editEnterprise(enterprise)"><ion-icon slot="icon-only"
+              name="create"></ion-icon></ion-button>
+          <ion-button><ion-icon slot="icon-only" name="trash-bin"></ion-icon></ion-button>
+        </ion-buttons>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="createEnterprise()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
 </ion-content>

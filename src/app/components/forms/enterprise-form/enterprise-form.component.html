@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-item slot="start">
+      <ion-back-button (click)="modalController.dismiss()"></ion-back-button>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-fab slot="fixed" horizontal="end" vertical="top" [edge]="true">
+    <ion-fab-button (click)="save()">
+      <ion-icon name="save"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <form [formGroup]="enterpriseFormGroup" class="ion-padding">
+    <ion-item>
+      <ion-icon slot="start" name="text"></ion-icon>
+      <ion-input formControlName="rfc" required placeholder="rfc"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon slot="start" name="business"></ion-icon>
+      <ion-input formControlName="razon_social" required placeholder="razón social"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-select label="Estado" placeholder="Selecciona un Estado" #state [value]="idEstado">
+        <ion-select-option *ngFor="let state of states" [value]="state.id">{{state.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item [disabled]="!state.value">
+      <ion-select formControlName="idCiudad" required label="Ciudad" placeholder="Selecciona una ciudad" #city >
+        <ion-item *ngFor="let city of cities">
+          <ion-select-option [value]="city.id" *ngIf="city.idEstado == state.value">{{city.name}}</ion-select-option>
+        </ion-item>
+      </ion-select>
+    </ion-item>
+    <ion-item [disabled]="!city.value">
+      <ion-icon slot="start" name="map"></ion-icon>
+      <ion-input formControlName="colonia" required placeholder="colonia"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon slot="start" name="globe"></ion-icon>
+      <ion-input formControlName="codigo_postal" required placeholder="código postal"></ion-input>
+    </ion-item>
+  </form>
+</ion-content>
